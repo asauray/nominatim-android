@@ -1,4 +1,4 @@
-# nominatim-aarser
+# nominatim-parser
 Parser for OpenStreetMap Nominatim API
 Written for Android in Java
 Easy and efficient replacement for Google Places API
