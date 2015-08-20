@@ -2,6 +2,7 @@ package com.goodway.nominatimparser;
 
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -10,9 +11,11 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.reflect.Array;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -23,17 +26,18 @@ import java.util.HashMap;
 
 public class Request {
 
-    public static void getPlaces(Action a, HashMap<String, String> ... parameters){
+    public static void getPlaces(Action a, ArrayList<Pair> ... parameters){
         try{
             new GetPlaces(a, parameters).execute();
+            Log.d("getPlaces", "getPlaces");
         }
         catch(IllegalStateException e){
-
+            Log.e(e.getMessage(), "exception");
         }
 
     }
 
-    private static class GetPlaces extends AsyncTask<HashMap<String, String>, Place, Void>{
+    private static class GetPlaces extends AsyncTask<Pair, Place, Void>{
 
     /*
         wiki : http://wiki.openstreetmap.org/wiki/Nominatim
@@ -50,7 +54,7 @@ public class Request {
 
         private final String QUERY = "http://nominatim.openstreetmap.org/search?";
         private Action action;
-        private HashMap<String, String>[] parameters;
+        private ArrayList<Pair>[] parameters;
 
         /**
          *
@@ -58,19 +62,21 @@ public class Request {
          * @param parameters A set of keys and values to provide to the request. Each map will be triggered in a different request
          * @see Action
          */
-        public GetPlaces(Action action, HashMap<String, String> ... parameters){
+        public GetPlaces(Action action, ArrayList<Pair> ... parameters){
             this.action = action;
             this.parameters = parameters;
         }
 
         @Override
-        protected Void doInBackground(HashMap<String,String>... params) {
+        protected Void doInBackground(Pair... params) {
             StringBuilder jsonResult = new StringBuilder();
             StringBuilder sb = new StringBuilder(QUERY);
             sb.append("format=json&polygon=0&addressdetails=0&");
-            for(HashMap<String, String> map : parameters){
-                for(String s : map.keySet()){
-                    sb.append(s+"=" + map.get(s)+"&");
+            for(ArrayList<Pair> pairs : parameters){
+                Log.d("size="+pairs.size(), "arraylist found");
+                for(Pair p : pairs){
+                    sb.append(p.first+"=" + p.second+"&");
+                    Log.d("p.first="+p.first+" & o.second"+p.second, "pairs");
                 }
                 try {
                     URL url = new URL(sb.toString());
