@@ -1,4 +1,4 @@
-# Nominatim-Parser
+# nominatim-parser
 Parser for OpenStreetMap Nominatim API
 Written for Android in Java
 Easy and efficient replacement for Google Places API
@@ -25,3 +25,6 @@ Easy and efficient replacement for Google Places API
                 put("countrycodes", "fr");
             }
         });
+#License
+
+This library is distributed under the Apache 2.0 license found in the LICENSE file with the following exceptions. The protocol buffers library is distributed under the same BSD license as Google's protocol buffers. See README and LICENSE.
