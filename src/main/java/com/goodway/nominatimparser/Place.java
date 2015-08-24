@@ -5,7 +5,7 @@ package com.goodway.nominatimparser;
  * @version 0.5
  * Licensed under the Apache2 license
  */
-public class Place {
+public class Place implements PhysicalAdress{
     private long place_id, osm_id;
     private double lat, lon;
     private float importance;
@@ -37,6 +37,10 @@ public class Place {
     public String getDisplayName(){return display_name;}
     public String getEntityClass(){return entityClass;}
     public String getType(){return type;}
+
+    public String getName(){
+        return display_name;
+    }
 
     @Override
     public String toString(){
