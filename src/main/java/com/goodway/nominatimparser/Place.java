@@ -8,14 +8,14 @@ import android.os.Parcel;
  * @version 0.5
  * Licensed under the Apache2 license
  */
-public class Place extends PhysicalAdress{
+public class Place extends Adress{
     private long place_id, osm_id;
     private float importance;
     private String license, osm_type, display_name, entityClass, type;
     private BoundingBox boundingBox;
 
     public Place(long place_id, long osm_id, double lat, double lon, float importance, String license, String osm_type, String display_name, String entityClass, String type, BoundingBox boundingBox){
-        super(lat, lon);
+        super(display_name, android.R.mipmap.sym_def_app_icon, lat, lon);
         this.place_id = place_id;
         this.osm_id = osm_id;
         this.importance = importance;
@@ -29,6 +29,14 @@ public class Place extends PhysicalAdress{
 
     public Place(Parcel in){
         super(in);
+        place_id = in.readLong();
+        osm_id = in.readLong();
+        importance = in.readFloat();
+        license = in.readString();
+        osm_type = in.readString();
+        display_name = in.readString();
+        entityClass = in.readString();
+        type = in.readString();
     }
 
     @Override
@@ -76,4 +84,15 @@ public class Place extends PhysicalAdress{
         dest.writeString(license);
         dest.writeString(type);
     }
+
+    public static final Creator CREATOR =
+            new Creator() {
+                public Place createFromParcel(Parcel in) {
+                    return new Place(in);
+                }
+
+                public Place[] newArray(int size) {
+                    return new Place[size];
+                }
+            };
 }
