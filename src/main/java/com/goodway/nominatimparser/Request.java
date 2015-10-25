@@ -3,6 +3,9 @@ package com.goodway.nominatimparser;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.example.alexis.navitia_android.Address;
+import com.example.alexis.navitia_android.AddressType;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,7 +37,7 @@ public class Request {
 
     }
 
-    private static class GetPlaces extends AsyncTask<Pair, Place, Void>{
+    private static class GetPlaces extends AsyncTask<Pair, Address, Void>{
 
     /*
         wiki : http://wiki.openstreetmap.org/wiki/Nominatim
@@ -108,7 +111,8 @@ public class Request {
                             String type = jsonObject.optString("type");
                             float importance = (float) jsonObject.optDouble("importance");
 
-                            publishProgress(new Place(place_id, osm_id, lat, lon, importance, license, osm_type, display_name, entityClass, type, boundingBox));
+                            String[] split = display_name.split(",");
+                            publishProgress(new Address(split[0]+","+split[1], R.mipmap.ic_place_black_36dp, lat, lon, AddressType.PLACE));
                         }
 
                     } catch (JSONException e) {
@@ -129,7 +133,7 @@ public class Request {
 
 
         @Override
-        protected void onProgressUpdate(Place...progress){
+        protected void onProgressUpdate(Address...progress){
             action.action(progress[0]);
             Log.d(progress[0].toString(), "entity");
         }
