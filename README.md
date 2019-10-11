@@ -3,8 +3,8 @@ Parser for OpenStreetMap Nominatim API
 Written for Android in Java
 Easy and efficient replacement for Google Places API
 
-#Example
- Request.getPlaces(new Action() {
+# Example
+         Request.getPlaces(new Action() {
            
             @Override
             public void action(Place e) {
@@ -25,6 +25,7 @@ Easy and efficient replacement for Google Places API
                 put("countrycodes", "fr");
             }
         });
-#License
+        
+# License
 
 This library is distributed under the Apache 2.0 license found in the LICENSE file.
